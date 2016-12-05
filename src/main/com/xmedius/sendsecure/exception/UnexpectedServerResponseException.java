@@ -11,5 +11,4 @@ public class UnexpectedServerResponseException extends SendSecureException {
 	public UnexpectedServerResponseException(Throwable cause) {
 		super("1", "Unexpected server response format", cause);
 	}
-
 }

@@ -10,5 +10,4 @@ public class TemporaryDocument {
 	public String getGuid() {
 		return temporaryDocument.getGuid();
 	}
-
 }

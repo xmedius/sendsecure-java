@@ -5,6 +5,9 @@ import java.util.List;
 
 import com.google.gson.annotations.SerializedName;
 
+/**
+ * Class Safebox builds an object to send all the necessary information to create a new Safebox
+ */
 public class Safebox {
 
 	@SerializedName("user_email")

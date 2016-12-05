@@ -4,6 +4,12 @@ import java.util.List;
 
 import com.google.gson.annotations.SerializedName;
 
+/**
+ * Class Recipient builds an object to create a recipient to the SafeBox
+ *
+ * @author laurence.labonte
+ *
+ */
 public class Recipient {
 
 	private String email;

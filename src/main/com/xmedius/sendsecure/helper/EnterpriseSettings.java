@@ -4,6 +4,9 @@ import java.util.Date;
 
 import com.google.gson.annotations.SerializedName;
 
+/**
+ * Class EnterpriseSettings represent the settings of an Enterprise Account
+ */
 public class EnterpriseSettings {
 
 	@SerializedName("created_at")

@@ -2,6 +2,9 @@ package com.xmedius.sendsecure.helper;
 
 import java.util.List;
 
+/**
+ * Class ExtensionFilter represent the list of allow/forbid extension for an attachment
+ */
 public class ExtensionFilter {
 
 	private String mode;

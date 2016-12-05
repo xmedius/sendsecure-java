@@ -2,6 +2,9 @@ package com.xmedius.sendsecure.helper;
 
 import com.google.gson.annotations.SerializedName;
 
+/**
+ * Class SafeboxResponse represent the response to a successful creation of a Safebox
+ */
 public class SafeboxResponse {
 
 	private String guid;
@@ -21,5 +24,4 @@ public class SafeboxResponse {
 	public String getEncryptionKey() {
 		return encryptionKey;
 	}
-
 }

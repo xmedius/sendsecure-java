@@ -8,8 +8,7 @@ public class SendSecureException extends Exception {
 
 	private String code;
 
-
-	//TODO: Better error handling to return full json body on error
+	// TODO: Better error handling to return full json body on error
 	public SendSecureException() {
 		super();
 	}
@@ -27,5 +26,4 @@ public class SendSecureException extends Exception {
 	public String getCode() {
 		return code;
 	}
-
 }

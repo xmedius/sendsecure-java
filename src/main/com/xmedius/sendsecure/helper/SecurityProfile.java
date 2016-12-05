@@ -5,27 +5,33 @@ import java.util.Date;
 import com.google.gson.annotations.SerializedName;
 import com.xmedius.sendsecure.json.Value;
 
+/**
+ * Class SecurityProfile represent the settings of an Security Profile
+ */
 public class SecurityProfile {
 
-	public enum TimeUnit {
-		@SerializedName("hours")  HOURS,
-		@SerializedName("days")   DAYS,
-		@SerializedName("weeks")  WEEKS,
+	public enum TimeUnit
+	{
+		@SerializedName("hours") HOURS,
+		@SerializedName("days") DAYS,
+		@SerializedName("weeks") WEEKS,
 		@SerializedName("months") MONTHS
 	}
 
-	public enum LongTimeUnit {
-		@SerializedName("hours")  HOURS,
-		@SerializedName("days")   DAYS,
-		@SerializedName("weeks")  WEEKS,
+	public enum LongTimeUnit
+	{
+		@SerializedName("hours") HOURS,
+		@SerializedName("days") DAYS,
+		@SerializedName("weeks") WEEKS,
 		@SerializedName("months") MONTHS,
-		@SerializedName("years")  YEARS
+		@SerializedName("years") YEARS
 	}
 
-	public enum RetentionPeriodType {
+	public enum RetentionPeriodType
+	{
 		@SerializedName("discard_at_expiration") DISCARD_AT_EXPIRATION,
-		@SerializedName("retain_at_expiration")  RETAIN_AT_EXPIRATION,
-		@SerializedName("do_not_discard")  DO_NOT_DISCARD
+		@SerializedName("retain_at_expiration") RETAIN_AT_EXPIRATION,
+		@SerializedName("do_not_discard") DO_NOT_DISCARD
 	}
 
 	private int id;
@@ -275,5 +281,4 @@ public class SecurityProfile {
 	public void setRetentionPeriodUnit(Value<LongTimeUnit> retentionPeriodUnit) {
 		this.retentionPeriodUnit = retentionPeriodUnit;
 	}
-
 }

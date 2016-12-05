@@ -10,5 +10,4 @@ public class Document {
 	public String getGuid() {
 		return documentGuid;
 	}
-
 }

@@ -5,6 +5,9 @@ import java.io.InputStream;
 
 import com.google.gson.annotations.SerializedName;
 
+/**
+ * Class Attachment builds an object to be uploaded to the server. Can be created either with a File or InputStream
+ */
 public class Attachment {
 
 	private String guid;
