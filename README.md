@@ -61,7 +61,7 @@ import java.io.IOException;
 public class Example {
        public static void main(String[] args) throws Exception {
               try {
-                     String userToken = Client.getUserToken("deathstar", "darthvader", "d@Rk$1De");
+                     String userToken = Client.getUserToken("deathstar", "darthvader", "d@Rk$1De", null, null);
                      System.out.println(userToken);
               } catch (IOException | SendSecureException e) {
                      throw e;

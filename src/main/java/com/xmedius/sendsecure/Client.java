@@ -44,11 +44,11 @@ public class Client {
 	 * Client object constructor. Used to make call to create a SendSecure
 	 *
 	 * @param apiToken
-	 *            Authentication token received by a call to static function getUserToken
+	 *            The API Token to be used for authentication with the SendSecure service
 	 * @param enterpriseAccount
-	 *            The Enterprise Account of your XMedius Portal account
+	 *            The SendSecure enterprise account
 	 * @param endpoint
-	 *            The url to connect to the cloud service. If empty, default is "https://portal.xmedius.com"
+	 *            The URL to the SendSecure service ("https://portal.xmedius.com" will be used by default if empty)
 	 */
 	public Client(String apiToken, String enterpriseAccount, String endpoint) {
 		jsonClient = new JsonClient(apiToken, enterpriseAccount, endpoint, null);
@@ -58,49 +58,32 @@ public class Client {
 	 * Client object constructor. Used to make call to create a SendSecure
 	 *
 	 * @param apiToken
-	 *            Authentication token received by a call to static function getUserToken
+	 *            The API Token to be used for authentication with the SendSecure service
 	 * @param enterpriseAccount
-	 *            The Enterprise Account of your XMedius Portal account
+	 *            The SendSecure enterprise account
 	 * @param endpoint
-	 *            The url to connect to the cloud service. If empty, default is "https://portal.xmedius.com"
+	 *            The URL to the SendSecure service ("https://portal.xmedius.com" will be used by default if empty)
 	 * @param locale
-	 *            The locale in which the server error will be returned
+	 *            The locale in which the server errors will be returned ("en" will be used by default if empty)
 	 */
 	public Client(String apiToken, String enterpriseAccount, String endpoint, String locale) {
 		jsonClient = new JsonClient(apiToken, enterpriseAccount, endpoint, locale);
 	}
 
 	/**
-	 * Obtain an authentication token
+	 * Gets an API Token for a specific user within a SendSecure enterprise account.
 	 *
 	 * @param enterpriseAccount
-	 *            The Enterprise Account of your XMedius Portal account
+	 *            The SendSecure enterprise account
 	 * @param username
-	 *            The username of your XMedius Portal account
+	 *            The username of a SendSecure user of the current enterprise account
 	 * @param password
-	 *            The password of your XMedius Portal account
-	 * @return Authentication token
-	 * @throws IOException
-	 * @throws SendSecureException
-	 */
-	public static String getUserToken(String enterpriseAccount, String username, String password) throws IOException, SendSecureException {
-		return Client.getUserToken(enterpriseAccount, username, password, null, null);
-	}
-
-	/**
-	 * Obtain an authentication token
-	 *
-	 * @param enterpriseAccount
-	 *            The Enterprise Account of your XMedius Portal account
-	 * @param username
-	 *            The username of your XMedius Portal account
-	 * @param password
-	 *            The password of your XMedius Portal account
+	 *            The password of this user
 	 * @param otp
-	 *            The otp code of your XMedius Portal account
+	 *            The one-time password of this user (if any)
 	 * @param endpoint
-	 *            The url to connect to the cloud service. If empty, default is "https://portal.xmedius.com"
-	 * @return Authentication token
+	 *            The URL to the SendSecure service ("https://portal.xmedius.com" will be used by default if empty)
+	 * @return API Token to be used for the specified user
 	 * @throws IOException
 	 * @throws SendSecureException
 	 */
@@ -137,11 +120,12 @@ public class Client {
 	 */
 
 	/**
-	 * Initialize the Safebox object
+	 * Pre-creates a SafeBox on the SendSecure system and initializes the Safebox object accordingly.
 	 *
 	 * @param safebox
-	 *            A Safebox object fill with the necessary info
-	 * @return The updated Safebox, with the guid, public encryption key and upload url parameters fill out
+	 *            A Safebox object to be initialized by the SendSecure system
+	 * @return The updated SafeBox object with the necessary system parameters (GUID, public encryption key, upload URL)
+	 *         filled out.
 	 * @throws ClientProtocolException
 	 * @throws IOException
 	 * @throws SendSecureException
@@ -158,13 +142,13 @@ public class Client {
 	}
 
 	/**
-	 * Upload a Attachment to a previously initialize Safebox
+	 * Uploads the specified file as an Attachment of the specified SafeBox.
 	 *
 	 * @param safebox
-	 *            A initialized Safebox
+	 *            An initialized Safebox object
 	 * @param attachment
-	 *            The attachment to upload to the server
-	 * @return The updated attachment, with the guid parameter fill out
+	 *            An Attachment object - the file to upload to the SendSecure system
+	 * @return The updated Attachment object with the GUID parameter filled out.
 	 * @throws ClientProtocolException
 	 * @throws IOException
 	 * @throws SendSecureException
@@ -184,10 +168,12 @@ public class Client {
 	}
 
 	/**
-	 * Commit the Safebox to the server. This will actually send the SendSecure.
+	 * Finalizes the creation (commit) of the SafeBox on the SendSecure system. This actually "Sends" the SafeBox with
+	 * all content and contact info previously specified.
 	 *
 	 * @param safebox
-	 *            A initialized SafeBox, with possibly a few attachments
+	 *            A Safebox object already initialized, with security profile, recipient(s), subject and message already
+	 *            defined, and attachments already uploaded.
 	 * @return {@link com.xmedius.sendsecure.helper.SafeboxResponse SafeboxResponse}
 	 * @throws ClientProtocolException
 	 * @throws URISyntaxException
@@ -204,11 +190,12 @@ public class Client {
 	}
 
 	/**
-	 * This will send a Safebox in one single call. This is the same as calling {@link #initializeSafebox},
-	 * {@link #uploadAttachment} and {@link #commitSafebox}
+	 * This method is a high-level combo that {@link #initializeSafebox initializes} the SafeBox,
+	 * {@link #uploadAttachment uploads} all attachments and {@link #commitSafebox commits} the SafeBox.
 	 *
 	 * @param safebox
-	 *            The fully filled Safebox . Must include Recipients and Attachment(optional)
+	 *            A non-initialized Safebox object with security profile, recipient(s), subject, message and attachments
+	 *            (not yet uploaded) already defined.
 	 * @return {@link com.xmedius.sendsecure.helper.SafeboxResponse SafeboxResponse}
 	 * @throws ClientProtocolException
 	 * @throws IOException
@@ -232,11 +219,11 @@ public class Client {
 	}
 
 	/**
-	 * Return the list of {@link #com.xmedius.sendsecure.helper.SecurityProfile Security Profile} for a user
+	 * Retrieves all available security profiles of the enterprise account for a specific user.
 	 *
 	 * @param userEmail
-	 *            The email of a user
-	 * @return The list of {@link #com.xmedius.sendsecure.helper.SecurityProfile Security Profile}
+	 *            The email address of a SendSecure user of the current enterprise account
+	 * @return The list of all security profiles of the enterprise account, with all their setting values/properties.
 	 * @throws ClientProtocolException
 	 * @throws URISyntaxException
 	 * @throws IOException
@@ -250,10 +237,9 @@ public class Client {
 	}
 
 	/**
-	 * Get the {@link #com.xmedius.sendsecure.helper.EnterpriseSettings Enterprise Setting} of the current Enterprise
-	 * Account
+	 * Retrieves all the current enterprise account's settings specific to SendSecure Account
 	 *
-	 * @return {@link #com.xmedius.sendsecure.helper.EnterpriseSettings Enterprise Setting}
+	 * @return All values/properties of the enterprise account's settings specific to SendSecure.
 	 * @throws ClientProtocolException
 	 * @throws URISyntaxException
 	 * @throws IOException
@@ -266,11 +252,13 @@ public class Client {
 	}
 
 	/**
-	 * Get the Default {@link #com.xmedius.sendsecure.helper.SecurityProfile Security Profile} of a user
+	 * Retrieves the default {@link com.xmedius.sendsecure.helper.SecurityProfile security profile} of the enterprise
+	 * account for a specific user. A default security profile must have been set in the enterprise account, otherwise
+	 * the method will return nothing.
 	 *
 	 * @param userEmail
-	 *            The email of a user
-	 * @return {@link #com.xmedius.sendsecure.helper.SecurityProfile Security Profile}
+	 *            The email address of a SendSecure user of the current enterprise account
+	 * @return Default security profile of the enterprise, with all its setting values/properties.
 	 * @throws ClientProtocolException
 	 * @throws URISyntaxException
 	 * @throws IOException

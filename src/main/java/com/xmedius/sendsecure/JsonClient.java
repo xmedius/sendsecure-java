@@ -30,13 +30,13 @@ public class JsonClient {
 	 * JsonClient object constructor. Used to make call to create a SendSecure
 	 *
 	 * @param apiToken
-	 *            Authentication token received by a call to function {@link com.xmedius.sendsecure.Client#getUserToken
-	 *            getUserToken}
+	 *            The API Token to be used for authentication with the SendSecure service
 	 * @param enterpriseAccount
-	 *            The Enterprise Account of your XMedius Portal account
+	 *            The SendSecure enterprise account
 	 * @param endpoint
-	 *            The url to connect to the cloud service. If empty, default is "https://portal.xmedius.com"
+	 *            The URL to the SendSecure service ("https://portal.xmedius.com" will be used by default if empty)
 	 * @param locale
+	 *            The locale in which the server errors will be returned ("en" will be used by default if empty)
 	 */
 	public JsonClient(String apiToken, String enterpriseAccount, String endpoint, String locale) {
 		this.apiToken = apiToken;
@@ -46,10 +46,10 @@ public class JsonClient {
 	}
 
 	/**
-	 * Initialize the Safebox object
+	 * Pre-creates a SafeBox on the SendSecure system and initializes the Safebox object accordingly.
 	 *
 	 * @param userEmail
-	 *            The email of the owner of the Safebox
+	 *            The email address of a SendSecure user of the current enterprise account
 	 * @return The json containing the guid, public encryption key and upload url of the initialize SafeBox
 	 * @throws ClientProtocolException
 	 * @throws IOException
@@ -62,7 +62,7 @@ public class JsonClient {
 	}
 
 	/**
-	 * Upload a Attachment
+	 * Uploads the specified file as an Attachment of the specified SafeBox.
 	 *
 	 * @param uploadUrl
 	 *            The url returned by the initializeSafeBox. Can be used multiple time
@@ -80,7 +80,7 @@ public class JsonClient {
 	}
 
 	/**
-	 * Upload a Attachment
+	 * Uploads the specified file as an Attachment of the specified SafeBox.
 	 *
 	 * @param uploadUrl
 	 *            The url returned by the initializeSafeBox. Can be used multiple time
@@ -103,7 +103,7 @@ public class JsonClient {
 	}
 
 	/**
-	 * Commit the Safebox to the server. This will actually send the SendSecure.
+	 * Finalizes the creation (commit) of the SafeBox on the SendSecure system. This actually "Sends" the SafeBox with all content and contact info previously specified.
 	 *
 	 * @param safeboxJson
 	 *            The full json expected by the server
@@ -119,10 +119,10 @@ public class JsonClient {
 	}
 
 	/**
-	 * Return the list of Security Profile for a user
+	 * Retrieves all available security profiles of the enterprise account for a specific user.
 	 *
 	 * @param userEmail
-	 *            The email of a user
+	 *            The email address of a SendSecure user of the current enterprise account
 	 * @return The json containing a list of Security Profile
 	 * @throws ClientProtocolException
 	 * @throws URISyntaxException
@@ -135,7 +135,7 @@ public class JsonClient {
 	}
 
 	/**
-	 * Get the Enterprise Settings of the current Enterprise Account
+	 * Get the Enterprise Settings of the current enterprise account
 	 *
 	 * @return The json containing the enterprise settings
 	 * @throws ClientProtocolException
