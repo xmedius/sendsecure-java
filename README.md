@@ -38,8 +38,10 @@ With this library, you will be able to:
 
 ## Install Package
 
-```java
-TBD
+### via Maven
+
+```
+mvn install
 ```
 
 <a name="quickstart"></a>
@@ -51,8 +53,8 @@ Authentication is done using an API Token, which must be first obtained based on
 Here is the minimum code to get such a user-based API Token.
 
 ```java
-import com.xmedius.Client;
-import com.xmedius.exception.SendSecureException;
+import com.xmedius.sendsecure.Client;
+import com.xmedius.sendsecure.exception.SendSecureException;
 
 import java.io.IOException;
 

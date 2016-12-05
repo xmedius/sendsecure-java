@@ -1,6 +1,6 @@
-import com.xmedius.sendsecure.*;
+import com.xmedius.sendsecure.Client;
 import com.xmedius.sendsecure.helper.*;
-import com.xmedius.sendsecure.exception.*;
+import com.xmedius.sendsecure.exception.SendSecureException;
 
 import java.io.File;
 import java.io.IOException;
