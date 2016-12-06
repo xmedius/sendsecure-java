@@ -1,5 +1,6 @@
 package com.xmedius.sendsecure;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
@@ -7,6 +8,7 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.http.HttpEntity;
@@ -141,6 +143,9 @@ public class Client {
 	 * @throws URISyntaxException
 	 */
 	public Safebox initializeSafebox(Safebox safebox) throws ClientProtocolException, IOException, SendSecureException, URISyntaxException {
+		if (safebox == null) {
+			throw new SendSecureException("Safebox cannot be null");
+		}
 		String result = jsonClient.initializeSafeBox(safebox.getUserEmail());
 		Gson gson = new Gson();
 		Safebox returnedSafebox = gson.fromJson(result, Safebox.class);
@@ -163,11 +168,17 @@ public class Client {
 	 * @throws SendSecureException
 	 */
 	public Attachment uploadAttachment(Safebox safebox, Attachment attachment) throws ClientProtocolException, IOException, SendSecureException {
+		if (safebox == null || attachment == null) {
+			throw new SendSecureException("Safebox/Attachment cannot be null");
+		}
 		String result;
 		if (attachment.getStream() != null) {
 			result = jsonClient.uploadFile(safebox.getUploadUrl(), attachment.getStream(), attachment.getContentType(), attachment.getFilename(),
 					attachment.getSize());
 		} else {
+			if (!attachment.getFile().exists()) {
+				throw new FileNotFoundException();
+			}
 			result = jsonClient.uploadFile(safebox.getUploadUrl(), attachment.getFile(), attachment.getContentType());
 		}
 		Gson gson = new Gson();
@@ -190,6 +201,12 @@ public class Client {
 	 * @throws SendSecureException
 	 */
 	public SafeboxResponse commitSafebox(Safebox safebox) throws ClientProtocolException, URISyntaxException, IOException, SendSecureException {
+		if (safebox.getSecurityProfile() == null) {
+			throw new SendSecureException("Security Profile cannot be null");
+		}
+		if (CollectionUtils.isEmpty(safebox.getRecipients())) {
+			throw new SendSecureException("Recipient cannot be empty");
+		}
 		CommitSafeboxRequest commitSafeboxRequest = new CommitSafeboxRequest(safebox);
 		Gson gson = new Gson();
 		String safeboxJson = gson.toJson(commitSafeboxRequest);

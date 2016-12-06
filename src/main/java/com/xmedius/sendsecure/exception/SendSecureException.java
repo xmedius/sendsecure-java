@@ -13,6 +13,10 @@ public class SendSecureException extends Exception {
 		super();
 	}
 
+	public SendSecureException(String message) {
+		super(message);
+	}
+
 	public SendSecureException(String code, String message, String responseContent) {
 		super(message);
 		this.code = code;
