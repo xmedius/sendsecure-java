@@ -61,7 +61,7 @@ import java.io.IOException;
 public class Example {
        public static void main(String[] args) throws Exception {
               try {
-                     String userToken = Client.getUserToken("deathstar", "darthvader", "d@Rk$1De", null, null);
+                     String userToken = Client.getUserToken("deathstar", "darthvader", "d@Rk$1De", "DV-TIE/x1", "TIE Advanced x1", "The Force App", null, null);
                      System.out.println(userToken);
               } catch (IOException | SendSecureException e) {
                      throw e;
@@ -123,7 +123,7 @@ TBD
 
 ### Get User Token
 ```
-getUserToken(String enterpriseAccount, String username, String password, String otp, String endpoint)
+getUserToken(String enterpriseAccount, String username, String password, String deviceId, String deviceName, String applicationType, String otp, String endpoint)
 ```
 Gets an API Token for a specific user within a SendSecure enterprise account.
 
@@ -132,6 +132,9 @@ Param             | Definition
 enterpriseAccount | The SendSecure enterprise account
 username          | The username of a SendSecure user of the current enterprise account
 password          | The password of this user
+deviceId          | The unique ID of the device used to get the Token 
+deviceName        | The name of the device used to get the Token
+applicationType   | The type/name of the application used to get the Token ("SendSecure Java" will be used by default if empty)
 otp               | The one-time password of this user (if any)
 endpoint          | The URL to the SendSecure service ("https://portal.xmedius.com" will be used by default if empty)
 
@@ -149,29 +152,36 @@ enterpriseAccount | The SendSecure enterprise account
 endpoint          | The URL to the SendSecure service ("https://portal.xmedius.com" will be used by default if empty)
 locale            | The locale in which the server errors will be returned ("en" will be used by default if empty)
 
-### Submit SafeBox
+### Get Enterprise Settings
 ```
-submitSafebox(Safebox safebox)
+enterprise_settings
 ```
-This method is a high-level combo that initializes the SafeBox, uploads all attachments and commits the SafeBox.
-
-Param      | Definition
------------|-----------
-safebox    | A non-initialized Safebox object with security profile, recipient(s), subject, message and attachments (not yet uploaded) already defined. 
-
+Returns all values/properties of the enterprise account's settings specific to SendSecure.
 
 ### Get Default Security Profile
 ```
 getDefaultSecurityProfile(String userEmail)
 ```
 Retrieves the default security profile of the enterprise account for a specific user.
-A default security profile must have been set in the enterprise account, otherwise the method will fail.
+A default security profile must have been set for the user in the enterprise account.
 
 Param      | Definition
 -----------|-----------
 userEmail  | The email address of a SendSecure user of the current enterprise account
 
 Returns the default security profile of the enterprise, with all its setting values/properties.
+
+### Get Security Profiles
+```
+getSecurityProfiles(String userEmail)
+```
+Retrieves all available security profiles of the enterprise account for a specific user.
+
+Param      | Definition
+-----------|-----------
+userEmail  | The email address of a SendSecure user of the current enterprise account
+
+Returns the list of all security profiles of the enterprise account, with all their setting values/properties.
 
 ### Initialize SafeBox
 ```
@@ -209,23 +219,16 @@ Param      | Definition
 -----------|-----------
 safebox    | A Safebox object already initialized, with security profile, recipient(s), subject and message already defined, and attachments already uploaded. 
 
-### Get Security Profiles
+### Submit SafeBox
 ```
-getSecurityProfiles(String userEmail)
+submitSafebox(Safebox safebox)
 ```
-Retrieves all available security profiles of the enterprise account for a specific user.
+This method is a high-level combo that initializes the SafeBox, uploads all attachments and commits the SafeBox.
 
 Param      | Definition
 -----------|-----------
-userEmail  | The email address of a SendSecure user of the current enterprise account
+safebox    | A non-initialized Safebox object with security profile, recipient(s), subject, message and attachments (not yet uploaded) already defined. 
 
-Returns the list of all security profiles of the enterprise account, with all their setting values/properties.
-
-### Get Enterprise Settings
-```
-enterprise_settings
-```
-Returns all values/properties of the enterprise account's settings specific to SendSecure.
 
 ### Helper Modules
 
