@@ -12,7 +12,8 @@ public class Example {
 		 *
 		 */
 		try {
-			String userToken = Client.getUserToken("deathstar", "darthvader", "d@Rk$1De", "123456789", "Outpost #1", null, null, null);
+			String userToken = Client.getUserToken("deathstar", "darthvader", "d@Rk$1De", "DV-TIE/x1", "TIE Advanced x1", "The Force App", null,
+					null);
 			System.out.println(userToken);
 		} catch (IOException | SendSecureException e) {
 			throw e;

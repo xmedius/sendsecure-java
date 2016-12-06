@@ -83,11 +83,11 @@ public class Client {
 	 * @param password
 	 *            The password of this user
 	 * @param deviceId
-	 *            The device Id that identify that token
+	 *            The unique ID of the device used to get the Token
 	 * @param deviceName
-	 *            The device Name that identify that token
+	 *            The name of the device used to get the Token
 	 * @param applicationType
-	 *            The application type that identify that token ("SendSecure Java" will be used by default if empty)
+	 *            The type/name of the application used to get the Token ("SendSecure Java" will be used by default if empty)
 	 * @param otp
 	 *            The one-time password of this user (if any)
 	 * @param endpoint
