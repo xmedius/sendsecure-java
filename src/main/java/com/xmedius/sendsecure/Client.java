@@ -7,6 +7,7 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpStatus;
@@ -79,6 +80,12 @@ public class Client {
 	 *            The username of a SendSecure user of the current enterprise account
 	 * @param password
 	 *            The password of this user
+	 * @param deviceId
+	 *            The device Id that identify that token
+	 * @param deviceName
+	 *            The device Name that identify that token
+	 * @param applicationType
+	 *            The application type that identify that token ("SendSecure Java" will be used by default if empty)
 	 * @param otp
 	 *            The one-time password of this user (if any)
 	 * @param endpoint
@@ -87,30 +94,32 @@ public class Client {
 	 * @throws IOException
 	 * @throws SendSecureException
 	 */
-	public static String getUserToken(String enterpriseAccount, String username, String password, String otp, String endpoint)
-			throws IOException, SendSecureException {
+	public static String getUserToken(String enterpriseAccount, String username, String password, String deviceId, String deviceName,
+			String applicationType, String otp, String endpoint) throws IOException, SendSecureException {
 		String portalUrl = getPortalUrl(enterpriseAccount, endpoint);
 
+		String content = "";
 		try (CloseableHttpResponse response = requestWrapper.post(UrlUtils.getUserTokenUrl(portalUrl),
-				getUserTokenParams(enterpriseAccount, username, password, otp))) {
+				getUserTokenParams(enterpriseAccount, username, password, otp, deviceId, deviceName, applicationType))) {
 			HttpEntity entity = response.getEntity();
 			if (entity == null) {
-				throw new UnexpectedServerResponseException();
+				throw new UnexpectedServerResponseException(content);
 			}
 			Gson gson = new GsonBuilder().create();
 			Reader reader = new InputStreamReader(entity.getContent(), ContentType.getOrDefault(entity).getCharset());
 			UserToken userToken = gson.fromJson(reader, UserToken.class);
+			content = IOUtils.toString(reader);
 			if (response.getStatusLine().getStatusCode() >= HttpStatus.SC_BAD_REQUEST) {
 				if (userToken != null && StringUtils.isNotEmpty(userToken.getCode())) {
-					throw new SendSecureException(userToken.getCode(), userToken.getMessage());
+					throw new SendSecureException(userToken.getCode(), userToken.getMessage(), content);
 				} else {
 					throw new SendSecureException(String.valueOf(response.getStatusLine().getStatusCode()),
-							response.getStatusLine().getReasonPhrase());
+							response.getStatusLine().getReasonPhrase(), content);
 				}
 			}
 			return userToken.getToken();
 		} catch (JsonSyntaxException e) {
-			throw new UnexpectedServerResponseException(e);
+			throw new UnexpectedServerResponseException(content, e);
 		}
 	}
 
@@ -184,7 +193,6 @@ public class Client {
 		CommitSafeboxRequest commitSafeboxRequest = new CommitSafeboxRequest(safebox);
 		Gson gson = new Gson();
 		String safeboxJson = gson.toJson(commitSafeboxRequest);
-		System.out.println(safeboxJson);
 		String result = jsonClient.commitSafebox(safeboxJson);
 		return gson.fromJson(result, SafeboxResponse.class);
 	}
@@ -210,7 +218,7 @@ public class Client {
 		if (safebox.getSecurityProfile() == null) {
 			SecurityProfile defaultProfile = getDefaultSecurityProfile(safebox.getUserEmail());
 			if (defaultProfile == null) {
-				throw new SendSecureException("400", "No Security Profile configured");
+				throw new SendSecureException("400", "No Security Profile configured", null);
 			} else {
 				safebox.setSecurityProfile(defaultProfile);
 			}
@@ -275,22 +283,25 @@ public class Client {
 		String url = UrlUtils.getBasePortalUrl(enterpriseAccount, endpoint);
 		try (CloseableHttpResponse response = requestWrapper.get(url, null)) {
 			if (response.getStatusLine().getStatusCode() >= HttpStatus.SC_BAD_REQUEST) {
-				throw new SendSecureException(String.valueOf(response.getStatusLine().getStatusCode()), response.getStatusLine().getReasonPhrase());
+				String responseContent = EntityUtils.toString(response.getEntity());
+				throw new SendSecureException(String.valueOf(response.getStatusLine().getStatusCode()), response.getStatusLine().getReasonPhrase(),
+						responseContent);
 			}
 			HttpEntity entity = response.getEntity();
 			return EntityUtils.toString(entity, "UTF-8");
 		}
 	}
 
-	private static List<NameValuePair> getUserTokenParams(String enterpriseAccount, String username, String password, String otp) {
+	private static List<NameValuePair> getUserTokenParams(String enterpriseAccount, String username, String password, String otp, String deviceId,
+			String deviceName, String applicationType) {
 		List<NameValuePair> params = new ArrayList<NameValuePair>(7);
 		params.add(new BasicNameValuePair("permalink", enterpriseAccount));
 		params.add(new BasicNameValuePair("username", username));
 		params.add(new BasicNameValuePair("password", password));
 		params.add(new BasicNameValuePair("otp", otp));
-		params.add(new BasicNameValuePair("application_type", "SendSecure Java"));
-		params.add(new BasicNameValuePair("device_id", "device_id"));
-		params.add(new BasicNameValuePair("device_name", "Something"));
+		params.add(new BasicNameValuePair("application_type", StringUtils.isEmpty(applicationType) ? "SendSecure Java" : applicationType));
+		params.add(new BasicNameValuePair("device_id", deviceId));
+		params.add(new BasicNameValuePair("device_name", deviceName));
 		return params;
 	}
 }

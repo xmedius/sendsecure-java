@@ -42,7 +42,9 @@ public class RequestWrapper {
 	public String getJson(String url, String apiToken) throws SendSecureException, ClientProtocolException, IOException {
 		try (CloseableHttpResponse response = get(url, apiToken)) {
 			if (response.getStatusLine().getStatusCode() >= HttpStatus.SC_BAD_REQUEST) {
-				throw new SendSecureException(String.valueOf(response.getStatusLine().getStatusCode()), response.getStatusLine().getReasonPhrase());
+				String responseContent = EntityUtils.toString(response.getEntity());
+				throw new SendSecureException(String.valueOf(response.getStatusLine().getStatusCode()), response.getStatusLine().getReasonPhrase(),
+						responseContent);
 			}
 			HttpEntity entity = response.getEntity();
 			return EntityUtils.toString(entity, "UTF-8");
@@ -79,7 +81,9 @@ public class RequestWrapper {
 	public String postJson(String url, String json, String apiToken) throws ClientProtocolException, IOException, SendSecureException {
 		try (CloseableHttpResponse response = post(url, json, apiToken)) {
 			if (response.getStatusLine().getStatusCode() >= HttpStatus.SC_BAD_REQUEST) {
-				throw new SendSecureException(String.valueOf(response.getStatusLine().getStatusCode()), response.getStatusLine().getReasonPhrase());
+				String responseContent = EntityUtils.toString(response.getEntity());
+				throw new SendSecureException(String.valueOf(response.getStatusLine().getStatusCode()), response.getStatusLine().getReasonPhrase(),
+						responseContent);
 			}
 			HttpEntity entity = response.getEntity();
 			return EntityUtils.toString(entity, "UTF-8");
@@ -89,7 +93,9 @@ public class RequestWrapper {
 	public String postFileJson(String url, File file, String contentType) throws ClientProtocolException, IOException, SendSecureException {
 		try (CloseableHttpResponse response = postFile(url, file, contentType)) {
 			if (response.getStatusLine().getStatusCode() >= HttpStatus.SC_BAD_REQUEST) {
-				throw new SendSecureException(String.valueOf(response.getStatusLine().getStatusCode()), response.getStatusLine().getReasonPhrase());
+				String responseContent = EntityUtils.toString(response.getEntity());
+				throw new SendSecureException(String.valueOf(response.getStatusLine().getStatusCode()), response.getStatusLine().getReasonPhrase(),
+						responseContent);
 			}
 			HttpEntity entity = response.getEntity();
 			return EntityUtils.toString(entity, "UTF-8");
@@ -100,7 +106,9 @@ public class RequestWrapper {
 			throws ClientProtocolException, IOException, SendSecureException {
 		try (CloseableHttpResponse response = postFile(url, stream, contentType, filename, size)) {
 			if (response.getStatusLine().getStatusCode() >= HttpStatus.SC_BAD_REQUEST) {
-				throw new SendSecureException(String.valueOf(response.getStatusLine().getStatusCode()), response.getStatusLine().getReasonPhrase());
+				String responseContent = EntityUtils.toString(response.getEntity());
+				throw new SendSecureException(String.valueOf(response.getStatusLine().getStatusCode()), response.getStatusLine().getReasonPhrase(),
+						responseContent);
 			}
 			HttpEntity entity = response.getEntity();
 			return EntityUtils.toString(entity, "UTF-8");

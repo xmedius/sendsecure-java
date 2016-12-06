@@ -7,23 +7,29 @@ public class SendSecureException extends Exception {
 	public static final int UNEXPECTED_FORMAT = 1;
 
 	private String code;
+	private String responseContent;
 
-	// TODO: Better error handling to return full json body on error
 	public SendSecureException() {
 		super();
 	}
 
-	public SendSecureException(String code, String message) {
+	public SendSecureException(String code, String message, String responseContent) {
 		super(message);
 		this.code = code;
+		this.responseContent = responseContent;
 	}
 
-	public SendSecureException(String code, String message, Throwable cause) {
+	public SendSecureException(String code, String message, String responseContent, Throwable cause) {
 		super(message, cause);
 		this.code = code;
+		this.responseContent = responseContent;
 	}
 
 	public String getCode() {
 		return code;
+	}
+
+	public String getResponseContent() {
+		return responseContent;
 	}
 }

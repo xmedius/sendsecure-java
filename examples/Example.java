@@ -12,7 +12,7 @@ public class Example {
 		 *
 		 */
 		try {
-			String userToken = Client.getUserToken("deathstar", "darthvader", "d@Rk$1De", null, null);
+			String userToken = Client.getUserToken("deathstar", "darthvader", "d@Rk$1De", "123456789", "Outpost #1", null, null, null);
 			System.out.println(userToken);
 		} catch (IOException | SendSecureException e) {
 			throw e;

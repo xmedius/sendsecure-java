@@ -4,11 +4,11 @@ public class UnexpectedServerResponseException extends SendSecureException {
 
 	private static final long serialVersionUID = 1L;
 
-	public UnexpectedServerResponseException() {
-		super("1", "Unexpected server response format");
+	public UnexpectedServerResponseException(String responseContent) {
+		super("1", "Unexpected server response format", responseContent);
 	}
 
-	public UnexpectedServerResponseException(Throwable cause) {
-		super("1", "Unexpected server response format", cause);
+	public UnexpectedServerResponseException(String responseContent, Throwable cause) {
+		super("1", "Unexpected server response format", responseContent, cause);
 	}
 }

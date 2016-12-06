@@ -103,7 +103,8 @@ public class JsonClient {
 	}
 
 	/**
-	 * Finalizes the creation (commit) of the SafeBox on the SendSecure system. This actually "Sends" the SafeBox with all content and contact info previously specified.
+	 * Finalizes the creation (commit) of the SafeBox on the SendSecure system. This actually "Sends" the SafeBox with
+	 * all content and contact info previously specified.
 	 *
 	 * @param safeboxJson
 	 *            The full json expected by the server
@@ -163,8 +164,9 @@ public class JsonClient {
 			String url = UrlUtils.getBaseSendSecureUrl(enterpriseAccount, endpoint);
 			try (CloseableHttpResponse response = requestWrapper.get(url, null)) {
 				if (response.getStatusLine().getStatusCode() >= HttpStatus.SC_BAD_REQUEST) {
+					String responseContent = EntityUtils.toString(response.getEntity());
 					throw new SendSecureException(String.valueOf(response.getStatusLine().getStatusCode()),
-							response.getStatusLine().getReasonPhrase());
+							response.getStatusLine().getReasonPhrase(), responseContent);
 				}
 				HttpEntity entity = response.getEntity();
 				sendSecureEndpoint = EntityUtils.toString(entity, "UTF-8");
