@@ -88,16 +88,16 @@ public class Client {
 	 *            The name of the device used to get the Token
 	 * @param applicationType
 	 *            The type/name of the application used to get the Token ("SendSecure Java" will be used by default if empty)
-	 * @param otp
-	 *            The one-time password of this user (if any)
 	 * @param endpoint
 	 *            The URL to the SendSecure service ("https://portal.xmedius.com" will be used by default if empty)
+	 * @param otp
+	 *            The one-time password of this user (if any)
 	 * @return API Token to be used for the specified user
 	 * @throws IOException
 	 * @throws SendSecureException
 	 */
 	public static String getUserToken(String enterpriseAccount, String username, String password, String deviceId, String deviceName,
-			String applicationType, String otp, String endpoint) throws IOException, SendSecureException {
+			String applicationType, String endpoint, String otp) throws IOException, SendSecureException {
 		String portalUrl = getPortalUrl(enterpriseAccount, endpoint);
 
 		String content = "";
