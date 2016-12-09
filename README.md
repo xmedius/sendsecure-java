@@ -80,6 +80,7 @@ This example uses the enterprise account's *default* security profile (which req
 ```java
 import com.xmedius.sendsecure.*;
 import com.xmedius.sendsecure.helper.*;
+import com.xmedius.sendsecure.helper.ContactMethod.DestinationType;
 
 import java.io.File;
 
@@ -96,6 +97,8 @@ public class Example {
                      safebox.setMessage("Son, you will find attached the evidence.");
 
                      Recipient recipient = new Recipient("lukeskywalker@rebels.com");
+                     ContactMethod contactMethod = new ContactMethod("555-232-5334", DestinationType.CELL_PHONE);
+                     recipient.getContactMethods().add(contactMethod);
                      safebox.getRecipients().add(recipient);
 
                      Attachment attachment = new Attachment(new File("Birth_Certificate.pdf"), "application/pdf");

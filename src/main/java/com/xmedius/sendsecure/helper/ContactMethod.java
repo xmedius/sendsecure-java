@@ -15,6 +15,11 @@ public class ContactMethod {
 		@SerializedName("other_phone") OTHER_PHONE
 	}
 
+	public ContactMethod(String destination, DestinationType destinationType) {
+		this.destination = destination;
+		this.destinationType = destinationType;
+	}
+
 	@SerializedName("destination_type")
 	private DestinationType destinationType;
 	private String destination;
