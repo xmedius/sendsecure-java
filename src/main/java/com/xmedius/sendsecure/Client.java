@@ -87,22 +87,23 @@ public class Client {
 	 * @param deviceName
 	 *            The name of the device used to get the Token
 	 * @param applicationType
-	 *            The type/name of the application used to get the Token ("SendSecure Java" will be used by default if empty)
+	 *            The type/name of the application used to get the Token ("SendSecure Java" will be used by default if
+	 *            empty)
 	 * @param endpoint
 	 *            The URL to the SendSecure service ("https://portal.xmedius.com" will be used by default if empty)
-	 * @param otp
+	 * @param oneTimePassword
 	 *            The one-time password of this user (if any)
 	 * @return API Token to be used for the specified user
 	 * @throws IOException
 	 * @throws SendSecureException
 	 */
 	public static String getUserToken(String enterpriseAccount, String username, String password, String deviceId, String deviceName,
-			String applicationType, String endpoint, String otp) throws IOException, SendSecureException {
+			String applicationType, String endpoint, String oneTimePassword) throws IOException, SendSecureException {
 		String portalUrl = getPortalUrl(enterpriseAccount, endpoint);
 
 		String content = "";
 		try (CloseableHttpResponse response = requestWrapper.post(UrlUtils.getUserTokenUrl(portalUrl),
-				getUserTokenParams(enterpriseAccount, username, password, otp, deviceId, deviceName, applicationType))) {
+				getUserTokenParams(enterpriseAccount, username, password, oneTimePassword, deviceId, deviceName, applicationType))) {
 			HttpEntity entity = response.getEntity();
 			if (entity == null) {
 				throw new UnexpectedServerResponseException(content);
@@ -309,13 +310,13 @@ public class Client {
 		}
 	}
 
-	private static List<NameValuePair> getUserTokenParams(String enterpriseAccount, String username, String password, String otp, String deviceId,
-			String deviceName, String applicationType) {
+	private static List<NameValuePair> getUserTokenParams(String enterpriseAccount, String username, String password, String oneTimePassword,
+			String deviceId, String deviceName, String applicationType) {
 		List<NameValuePair> params = new ArrayList<NameValuePair>(7);
 		params.add(new BasicNameValuePair("permalink", enterpriseAccount));
 		params.add(new BasicNameValuePair("username", username));
 		params.add(new BasicNameValuePair("password", password));
-		params.add(new BasicNameValuePair("otp", otp));
+		params.add(new BasicNameValuePair("otp", oneTimePassword));
 		params.add(new BasicNameValuePair("application_type", StringUtils.isEmpty(applicationType) ? "SendSecure Java" : applicationType));
 		params.add(new BasicNameValuePair("device_id", deviceId));
 		params.add(new BasicNameValuePair("device_name", deviceName));
