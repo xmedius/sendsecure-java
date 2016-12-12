@@ -61,7 +61,7 @@ import java.io.IOException;
 public class Example {
        public static void main(String[] args) throws Exception {
               try {
-                     String userToken = Client.getUserToken("deathstar", "darthvader", "d@Rk$1De", "DV-TIE/x1", "TIE Advanced x1", "The Force App", null, null);
+                     String userToken = Client.getUserToken("deathstar", "darthvader", "d@Rk$1De", "DV-TIE/x1", "TIE Advanced x1", "The Force App", "https://portal.xmedius.com", null);
                      System.out.println(userToken);
               } catch (IOException | SendSecureException e) {
                      throw e;
@@ -70,12 +70,10 @@ public class Example {
 }
 ```
 
-## SafeBox Creation
+## SafeBox Creation (Using SafeBox Helper Class)
 
 Here is the minimum required code to create a SafeBox – with 1 recipient, a subject, a message and 1 attachment.
 This example uses the user's *default* security profile (which requires to be set in the account).
-
-### With SafeBox Helper Class
 
 ```java
 import com.xmedius.sendsecure.*;
@@ -113,12 +111,6 @@ public class Example {
 }
 ```
 
-<!-- ### Without SafeBox Helper Class
-
-```java
-TBD
-```
- -->
 <a name="usage"></a>
 # Usage
 
