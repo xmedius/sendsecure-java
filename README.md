@@ -73,7 +73,7 @@ public class Example {
 ## SafeBox Creation
 
 Here is the minimum required code to create a SafeBox – with 1 recipient, a subject, a message and 1 attachment.
-This example uses the enterprise account's *default* security profile (which requires to be set in the account).
+This example uses the user's *default* security profile (which requires to be set in the account).
 
 ### With SafeBox Helper Class
 
@@ -126,114 +126,104 @@ TBD
 
 ### Get User Token
 ```
-getUserToken(String enterpriseAccount, String username, String password, String deviceId, String deviceName, String applicationType, String otp, String endpoint)
+getUserToken(enterpriseAccount, username, password, deviceId, deviceName, applicationType, endpoint, oneTimePassword)
 ```
-Gets an API Token for a specific user within a SendSecure enterprise account.
+Creates and returns an API Token for a specific user within a SendSecure enterprise account.
+Calling this method again with the exact same params will always return the same Token.
 
-Param             | Definition
-------------------|-----------
-enterpriseAccount | The SendSecure enterprise account
-username          | The username of a SendSecure user of the current enterprise account
-password          | The password of this user
-deviceId          | The unique ID of the device used to get the Token 
-deviceName        | The name of the device used to get the Token
-applicationType   | The type/name of the application used to get the Token ("SendSecure Java" will be used by default if empty)
-otp               | The one-time password of this user (if any)
-endpoint          | The URL to the SendSecure service ("https://portal.xmedius.com" will be used by default if empty)
-
-Returns the API Token to be used for the specified user.
+Param             | Type   | Definition
+------------------|--------|-----------
+enterpriseAccount | String | The SendSecure enterprise account
+username          | String | The username of a SendSecure user of the current enterprise account
+password          | String | The password of this user
+deviceId          | String | The unique ID of the device used to get the Token 
+deviceName        | String | The name of the device used to get the Token
+applicationType   | String | The type/name of the application used to get the Token ("SendSecure Java" will be used by default if empty)
+endpoint          | String | The URL to the SendSecure service ("https://portal.xmedius.com" will be used by default if empty)
+oneTimePassword   | String | The one-time password of this user (if any)
 
 ### Client Object Constructor
 ```
-Client(String apiToken, String enterpriseAccount, String endpoint, String locale)
+Client(apiToken, enterpriseAccount, endpoint, locale)
 ```
 
-Param             | Definition
-------------------|-----------
-apiToken          | The API Token to be used for authentication with the SendSecure service
-enterpriseAccount | The SendSecure enterprise account
-endpoint          | The URL to the SendSecure service ("https://portal.xmedius.com" will be used by default if empty)
-locale            | The locale in which the server errors will be returned ("en" will be used by default if empty)
+Param             | Type   | Definition
+------------------|--------|-----------
+apiToken          | String | The API Token to be used for authentication with the SendSecure service
+enterpriseAccount | String | The SendSecure enterprise account
+endpoint          | String | The URL to the SendSecure service ("https://portal.xmedius.com" will be used by default if empty)
+locale            | String | The locale in which the server errors will be returned ("en" will be used by default if empty)
 
 ### Get Enterprise Settings
 ```
-enterprise_settings
+getEnterpriseSettings()
 ```
 Returns all values/properties of the enterprise account's settings specific to SendSecure.
 
 ### Get Default Security Profile
 ```
-getDefaultSecurityProfile(String userEmail)
+getDefaultSecurityProfile(userEmail)
 ```
-Retrieves the default security profile of the enterprise account for a specific user.
-A default security profile must have been set for the user in the enterprise account.
+Returns the default security profile (if it has been set) for a specific user, with all its setting values/properties.
 
-Param      | Definition
------------|-----------
-userEmail  | The email address of a SendSecure user of the current enterprise account
-
-Returns the default security profile of the enterprise, with all its setting values/properties.
+Param      | Type   | Definition
+-----------|--------|-----------
+userEmail  | String | The email address of a SendSecure user of the current enterprise account
 
 ### Get Security Profiles
 ```
-getSecurityProfiles(String userEmail)
+getSecurityProfiles(userEmail)
 ```
-Retrieves all available security profiles of the enterprise account for a specific user.
+Returns the list of all security profiles available to a specific user, with all their setting values/properties.
 
-Param      | Definition
------------|-----------
-userEmail  | The email address of a SendSecure user of the current enterprise account
-
-Returns the list of all security profiles of the enterprise account, with all their setting values/properties.
+Param      | Type   | Definition
+-----------|--------|-----------
+userEmail  | String | The email address of a SendSecure user of the current enterprise account
 
 ### Initialize SafeBox
 ```
-initializeSafebox(Safebox safebox)
+initializeSafebox(safebox)
 ```
-Pre-creates a SafeBox on the SendSecure system and initializes the Safebox object accordingly.
+Pre-creates a SafeBox on the SendSecure system and returns the updated Safebox object with the necessary system parameters filled out (GUID, public encryption key, upload URL).
 
-Param      | Definition
------------|-----------
-safebox    | A Safebox object to be initialized by the SendSecure system
-
-Returns the updated SafeBox object with the necessary system parameters (GUID, public encryption key, upload URL) filled out.
+Param      | Type    | Definition
+-----------|---------|-----------
+safebox    | Safebox | A Safebox object to be initialized by the SendSecure system
 
 ### Upload Attachment
 ```
-uploadAttachment(Safebox safebox, Attachment attachment)
+uploadAttachment(safebox, attachment)
 ```
-Uploads the specified file as an Attachment of the specified SafeBox.
+Uploads the specified file as an Attachment of the specified SafeBox and returns the updated Attachment object with the GUID parameter filled out.
 
-Param      | Definition
------------|-----------
-safebox    | An initialized Safebox object
-attachment | An Attachment object - the file to upload to the SendSecure system
-
-Returns the updated Attachment object with the GUID parameter filled out.
+Param      | Type       | Definition
+-----------|------------|-----------
+safebox    | Safebox    | An initialized Safebox object
+attachment | Attachment | An Attachment object - the file to upload to the SendSecure system
 
 ### Commit SafeBox
 ```
-commitSafebox(Safebox safebox)
+commitSafebox(safebox)
 ```
 Finalizes the creation (commit) of the SafeBox on the SendSecure system.
 This actually "Sends" the SafeBox with all content and contact info previously specified.
 
-Param      | Definition
------------|-----------
-safebox    | A Safebox object already initialized, with security profile, recipient(s), subject and message already defined, and attachments already uploaded. 
+Param      | Type    | Definition
+-----------|---------|-----------
+safebox    | Safebox | A Safebox object already initialized, with security profile, recipient(s), subject and message already defined, and attachments already uploaded. 
 
 ### Submit SafeBox
 ```
-submitSafebox(Safebox safebox)
+submitSafebox(safebox)
 ```
 This method is a high-level combo that initializes the SafeBox, uploads all attachments and commits the SafeBox.
 
-Param      | Definition
------------|-----------
-safebox    | A non-initialized Safebox object with security profile, recipient(s), subject, message and attachments (not yet uploaded) already defined. 
+Param      | Type    | Definition
+-----------|---------|-----------
+safebox    | Safebox | A non-initialized Safebox object with security profile, recipient(s), subject, message and attachments (not yet uploaded) already defined. 
 
 
-### Helper Modules
+## Helper Modules
 
 ### Safebox
 
