@@ -219,29 +219,23 @@ safebox    | A non-initialized [Safebox](#safebox) object with security profile,
 
 <a name="safebox"></a>
 ### Safebox
-```
-Safebox
-```
 
 Builds an object to send all the necessary information to create a new Safebox.
 
 Attribute            | Definition
 ---------------------|-----------
+guid                 | The unique identifier of the SafeBox (filled by the system once the SafeBox is initialized).
+uploadUrl            | The URL used to upload the SafeBox attachments (filled by the system once the SafeBox is initialized).
+publicEncryptionKey  | The key used to encrypt the SafeBox attachments and/or messages (filled by the system once the SafeBox is initialized).
 userEmail            | The email address of the creator of the SafeBox (mandatory).
 subject              | The subject of the SafeBox (optional).
 message              | The initial message of the SafeBox (optional if the SafeBox has at least one attachment).
-guid                 | The unique identifier of the SafeBox (filled by the system once the SafeBox is initialized).
-publicEncryptionKey  | The key used to encrypt the SafeBox attachments and/or messages (filled by the system once the SafeBox is initialized).
-uploadUrl            | The URL used to upload the attachments (filled by the system once the SafeBox is initialized).
 recipients           | The list of all [Recipient](#recipient) objects of the SafeBox (mandatory, at least one recipient).
 attachments          | The list of all [Attachment](#attachment) objects of the SafeBox (optional if the SafeBox has a message).
 securityProfile      | The SecurityProfile object defining security options for the SafeBox (mandatory).
 notificationLanguage | The language used for email notifications sent to the recipients (optional, English by default).
 
 ### SafeboxResponse
-```
-SafeboxResponse
-```
 
 Represents the response to the successful creation of a SafeBox in the SendSecure system.
 All attributes are filled by the system once the SafeBox is successfully created (sent).
@@ -250,13 +244,10 @@ Attribute            | Definition
 ---------------------|-----------
 guid                 | The unique identifier of the SafeBox.
 previewUrl           | The URL to access the SafeBox in the SendSecure Web Portal.
-encryptionKey        | The decryption key that may be required to access the SafeBox (only if Double Encryption is enabled in the Security Profile).
+encryptionKey        | The key that may be required to decrypt the SafeBox content (only if Double Encryption is enabled in the Security Profile).
 
 <a name="recipient"></a>
 ### Recipient
-```
-Recipient
-```
 
 Builds an object to create a recipient for the SafeBox.
 
@@ -270,9 +261,6 @@ contactMethods       | The list of all [ContactMethod](#contactmethod) objects o
 
 <a name="contactmethod"></a>
 ### ContactMethod
-```
-ContactMethod
-```
 
 Builds an object to create a phone number destination owned by the recipient (as part of the Recipient object attributes).
 Any ContactMethod – plus the recipient's email address – will be usable as Security Code delivery means to the recipient.
@@ -286,12 +274,9 @@ destinationType      | The phone number's type (i.e. home/cell/office/other).
 
 <a name="attachment"></a>
 ### Attachment
-```
-Attachment
-```
 
 Builds an object to be uploaded to the server as attachment of the SafeBox.
-Can be created either with a [File](#file) or [InputStream](#inputstream).
+Can be created either with a [File](#file) or a [Stream](#stream).
 All attributes are mandatory.
 
 <a name="file"></a>
@@ -299,43 +284,34 @@ All attributes are mandatory.
 
 Attribute            | Definition
 ---------------------|-----------
-guid                 | The unique identifier of the file (filled by the system once the file is uploaded).
+guid                 | The unique identifier of the attachment (filled by the system once the file is uploaded).
 contentType          | The file Content-type (MIME). 
-file                 | The file.
+file                 | The file object to upload.
 
-<a name="inputstream"></a>
-#### InputStream
+<a name="stream"></a>
+#### Stream
 
 Attribute            | Definition
 ---------------------|-----------
-guid                 | The unique identifier of the file (filled by the system once the file is uploaded).
+guid                 | The unique identifier of the attachment (filled by the system once the file is uploaded).
+contentType          | The file Content-type (MIME). 
 stream               | The data to upload.
 filename             | The file name.
-contentType          | The file Content-type (MIME). 
 size                 | The file size.
 
 ### SecurityProfile
-```
-SecurityProfile
-```
 
 Represents the settings of a Security Profile.
 The use of specific attributes of this object rather takes place in advanced scenarios.
 To know all available attributes, please look in the library.
 
 ### EnterpriseSettings
-```
-EnterpriseSettings
-```
 
 Represents the SendSecure settings of an Enterprise Account.
 The use of specific attributes of this object rather takes place in advanced scenarios.
 To know all available attributes, please look in the library.
 
 ### ExtensionFilter
-```
-ExtensionFilter
-```
 
 Represents the list of allowed/forbidden extensions for SafeBox attachments (part of the EnterpriseSettings).
 The use of specific attributes of this object rather takes place in advanced scenarios.
