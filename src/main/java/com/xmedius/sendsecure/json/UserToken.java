@@ -1,7 +1,14 @@
 package com.xmedius.sendsecure.json;
 
+import com.google.gson.annotations.SerializedName;
+
+/**
+ * Class UserToken builds an object containing the server response to Client.getUserToken method.
+ */
 public class UserToken {
 	private String result;
+	@SerializedName("user_id")
+	private Integer userId;
 	private String token;
 	private String message;
 	private String code;
@@ -36,5 +43,13 @@ public class UserToken {
 
 	public void setToken(String token) {
 		this.token = token;
+	}
+
+	public Integer getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Integer userId) {
+		this.userId = userId;
 	}
 }

@@ -5,7 +5,7 @@ import java.util.Date;
 import com.google.gson.annotations.SerializedName;
 
 /**
- * Class EnterpriseSettings represent the settings of an Enterprise Account
+ * Class EnterpriseSettings represents the settings of an Enterprise Account
  */
 public class EnterpriseSettings {
 
@@ -23,6 +23,14 @@ public class EnterpriseSettings {
 	private String internationalDialingPlan;
 	@SerializedName("extension_filter")
 	private ExtensionFilter extensionFilter;
+	@SerializedName("virus_scan_enabled")
+	private Boolean virusScanEnabled;
+	@SerializedName("max_file_size_value")
+	private int maxFileSizeValue;
+	@SerializedName("max_file_size_unit")
+	private String maxFileSizeUnit;
+	@SerializedName("users_public_url")
+	private Boolean usersPublicUrl;
 	@SerializedName("include_users_in_autocomplete")
 	private boolean includeUsersInAutocomplete;
 	@SerializedName("include_favorites_in_autocomplete")
@@ -32,71 +40,51 @@ public class EnterpriseSettings {
 		return createdAt;
 	}
 
-	public void setCreatedAt(Date createdAt) {
-		this.createdAt = createdAt;
-	}
-
 	public Date getUpdatedAt() {
 		return updatedAt;
-	}
-
-	public void setUpdatedAt(Date updatedAt) {
-		this.updatedAt = updatedAt;
 	}
 
 	public int getDefaultSecurityProfileId() {
 		return defaultSecurityProfileId;
 	}
 
-	public void setDefaultSecurityProfileId(int defaultSecurityProfileId) {
-		this.defaultSecurityProfileId = defaultSecurityProfileId;
-	}
-
 	public String getPdfLanguage() {
 		return pdfLanguage;
-	}
-
-	public void setPdfLanguage(String pdfLanguage) {
-		this.pdfLanguage = pdfLanguage;
 	}
 
 	public boolean isUsePdfaAudit_records() {
 		return usePdfaAuditRecords;
 	}
 
-	public void setUsePdfaAuditRecords(boolean usePdfaAuditRecords) {
-		this.usePdfaAuditRecords = usePdfaAuditRecords;
-	}
-
 	public String getInternationalDialingPlan() {
 		return internationalDialingPlan;
-	}
-
-	public void setInternationalDialingPlan(String internationalDialingPlan) {
-		this.internationalDialingPlan = internationalDialingPlan;
 	}
 
 	public ExtensionFilter getExtensionFilter() {
 		return extensionFilter;
 	}
 
-	public void setExtensionFilter(ExtensionFilter extensionFilter) {
-		this.extensionFilter = extensionFilter;
-	}
-
 	public boolean isIncludeUsersInAutocomplete() {
 		return includeUsersInAutocomplete;
-	}
-
-	public void setIncludeUsersInAutocomplete(boolean includeUsersInAutocomplete) {
-		this.includeUsersInAutocomplete = includeUsersInAutocomplete;
 	}
 
 	public boolean isIncludeFavoritesInAutocomplete() {
 		return includeFavoritesInAutocomplete;
 	}
 
-	public void setIncludeFavoritesInAutocomplete(boolean includeFavoritesInAutocomplete) {
-		this.includeFavoritesInAutocomplete = includeFavoritesInAutocomplete;
+	public Boolean getVirusScanEnabled() {
+		return virusScanEnabled;
+	}
+
+	public Boolean getUsersPublicUrl() {
+		return usersPublicUrl;
+	}
+
+	public int getMaxFileSizeValue() {
+		return maxFileSizeValue;
+	}
+
+	public String getMaxFileSizeUnit() {
+		return maxFileSizeUnit;
 	}
 }

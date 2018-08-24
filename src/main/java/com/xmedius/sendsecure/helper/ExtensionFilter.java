@@ -1,13 +1,16 @@
 package com.xmedius.sendsecure.helper;
 
 import java.util.List;
+import com.google.gson.annotations.Expose;
 
 /**
- * Class ExtensionFilter represent the list of allow/forbid extension for an attachment
+ * Class ExtensionFilter represents the list of allow/forbid extension for an attachment
  */
 public class ExtensionFilter {
 
+	@Expose(serialize = false, deserialize = true)
 	private String mode;
+	@Expose(serialize = false, deserialize = true)
 	private List<String> list;
 
 	public String getMode() {

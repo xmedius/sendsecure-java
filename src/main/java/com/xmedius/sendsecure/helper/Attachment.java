@@ -10,6 +10,7 @@ import com.google.gson.annotations.SerializedName;
  */
 public class Attachment {
 
+	@SerializedName("document_guid")
 	private String guid;
 	private String filename;
 	@SerializedName("content_type")
