@@ -1,7 +1,7 @@
-**XMediusSENDSECURE (SendSecure)** is a collaborative file exchange platform that is both highly secure and simple to use.
-It is expressly designed to allow for the secured exchange of sensitive documents via virtual SafeBoxes.
+**XM SendSecure** is a collaborative file exchange platform that is both highly secure and simple to use.
+It is expressly designed to allow for the secure exchange of sensitive documents via virtual SafeBoxes.
 
-SendSecure comes with a **Web API**, which is **RESTful**, uses **HTTPs** and returns **JSON**.
+XM SendSecure comes with a **Web API**, which is **RESTful**, uses **HTTPs** and returns **JSON**.
 
 Specific libraries have been published for various languages:
 [C#](https://github.com/xmedius/sendsecure-csharp),
@@ -14,7 +14,7 @@ and
 
 # sendsecure-java
 
-**This library allows you to use the SendSecure Web API via Java.**
+**This library allows you to use the XM SendSecure Web API via Java.**
 
 With this library, you will be able to:
 * Authenticate SendSecure users
@@ -33,7 +33,7 @@ With this library, you will be able to:
 ## Prerequisites
 
 - Java version Oracle JDK 8
-- The SendSecure service, provided by [XMedius](https://www.xmedius.com/en/products?source=sendsecure-java) (demo accounts available on demand)
+- The XM SendSecure solution, provided by [XMedius](https://www.xmedius.com?source=sendsecure-java) (demo accounts available on demand)
 
 ## Install Package
 
